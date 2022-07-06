@@ -62,9 +62,10 @@ public class TankHealth : MonoBehaviour
         m_ExplosionParticles.gameObject.SetActive(true);
         m_ExplosionParticles.Play();
         m_ExplosionAudio.Play();
-
-        GameManager.gmInstance.RewardKiller(source);
-
+        if (source != this)
+        {
+            GameManager.gmInstance.RewardKiller(source);
+        }
         gameObject.SetActive(false);
     }
     public void RestoreHealth(TankHealth source)
@@ -72,7 +73,6 @@ public class TankHealth : MonoBehaviour
         if (source == this)
         {
             float restoreAmount = m_StartingHealth / 2;
-            Debug.Log("Health restored to:" + source.ToString());
             m_CurrentHealth = Mathf.Min(m_CurrentHealth + restoreAmount, m_StartingHealth);
             SetHealthUI();
         }
