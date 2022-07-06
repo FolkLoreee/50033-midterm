@@ -653,7 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b69dd8cec525df58a65f0a1979b59b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rowUI: {fileID: 1265653190808627443, guid: eb044b36c286ce76b8ede8dfea3bd04e, type: 3}
+  rowUI: {fileID: 4746915132813823019, guid: eb044b36c286ce76b8ede8dfea3bd04e, type: 3}
   statManager: {fileID: 2056436953}
 --- !u!114 &453703276
 MonoBehaviour:
@@ -860,8 +860,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_Font: {fileID: 12800000, guid: 3d7fe0a26ba72d949874021dc3d6995e, type: 3}
+    m_FontSize: 17
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -1634,12 +1634,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_Font: {fileID: 12800000, guid: 3d7fe0a26ba72d949874021dc3d6995e, type: 3}
+    m_FontSize: 17
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 41
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
