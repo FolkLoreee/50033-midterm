@@ -1057,6 +1057,7 @@ GameObject:
   - component: {fileID: 776604903}
   - component: {fileID: 776604902}
   - component: {fileID: 776604905}
+  - component: {fileID: 776604906}
   m_Layer: 12
   m_Name: ForceField
   m_TagString: Untagged
@@ -1143,6 +1144,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 737974283}
+--- !u!114 &776604906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776604901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d98034f8547bbfea900920c4cf5a97a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canShrink: 0
+  startTime: 40
 --- !u!1 &817093706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1493,7 @@ MonoBehaviour:
   - {fileID: 1435667194}
   - {fileID: 186534019}
   - {fileID: 400458581}
+  ForceField: {fileID: 776604906}
 --- !u!4 &1306993284
 Transform:
   m_ObjectHideFlags: 0

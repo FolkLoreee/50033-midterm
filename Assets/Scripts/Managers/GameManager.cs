@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gmInstance;
     public delegate void killEvent(TankHealth source);
     public static event killEvent OnTankDeath;
+    public ForceFieldController ForceField;
 
     private void Awake()
     {
@@ -113,6 +114,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator RoundPlaying()
     {
+        ForceField.canShrink = true;
+
         EnableTankControl();
 
         m_MessageText.text = string.Empty;
@@ -124,6 +127,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator RoundEnding()
     {
         DisableTankControl();
+        ForceField.ResetField();
 
         m_RoundWinner = null;
 
