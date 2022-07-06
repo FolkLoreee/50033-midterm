@@ -3,23 +3,24 @@ using UnityEngine.UI;
 
 public class TankHealth : MonoBehaviour
 {
-    public float m_StartingHealth = 100f;          
-    public Slider m_Slider;                        
-    public Image m_FillImage;                      
-    public Color m_FullHealthColor = Color.green;  
-    public Color m_ZeroHealthColor = Color.red;    
+    public float m_StartingHealth = 100f;
+    public Slider m_Slider;
+    public Image m_FillImage;
+    public Color m_FullHealthColor = Color.green;
+    public Color m_ZeroHealthColor = Color.red;
     public GameObject m_ExplosionPrefab;
-    
-    private AudioSource m_ExplosionAudio;          
-    private ParticleSystem m_ExplosionParticles;   
-    private float m_CurrentHealth;  
-    private bool m_Dead;            
+
+    private AudioSource m_ExplosionAudio;
+    private ParticleSystem m_ExplosionParticles;
+    private float m_CurrentHealth;
+    private bool m_Dead;
 
 
     private void Awake()
     {
         m_ExplosionParticles = Instantiate(m_ExplosionPrefab).GetComponent<ParticleSystem>();
         m_ExplosionAudio = m_ExplosionParticles.GetComponent<AudioSource>();
+        GameManager.OnTankDeath += RestoreHealth;
 
         m_ExplosionParticles.gameObject.SetActive(false);
     }
@@ -33,13 +34,13 @@ public class TankHealth : MonoBehaviour
         SetHealthUI();
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, TankHealth source)
     {
         // Adjust the tank's current health, update the UI based on the new health and check whether or not the tank is dead.
         m_CurrentHealth -= amount;
 
         SetHealthUI();
-        if (m_CurrentHealth <= 0f && !m_Dead) OnDeath();
+        if (m_CurrentHealth <= 0f && !m_Dead) OnDeath(source);
     }
 
 
@@ -51,7 +52,7 @@ public class TankHealth : MonoBehaviour
     }
 
 
-    private void OnDeath()
+    private void OnDeath(TankHealth source)
     {
         // Play the effects for the death of the tank and deactivate it.
         m_Dead = true;
@@ -61,6 +62,18 @@ public class TankHealth : MonoBehaviour
         m_ExplosionParticles.Play();
         m_ExplosionAudio.Play();
 
+        GameManager.gmInstance.RewardKiller(source);
+
         gameObject.SetActive(false);
+    }
+    public void RestoreHealth(TankHealth source)
+    {
+        if (source == this)
+        {
+            float restoreAmount = m_StartingHealth / 2;
+            Debug.Log("Health restored to:" + source.ToString());
+            m_CurrentHealth = Mathf.Min(m_CurrentHealth + restoreAmount, m_StartingHealth);
+            SetHealthUI();
+        }
     }
 }

@@ -11,9 +11,12 @@ public class ShellExplosion : MonoBehaviour
     public float m_MaxLifeTime = 2f;                  
     public float m_ExplosionRadius = 5f;              
 
+    private TankHealth ShooterHealth;
+
 
     private void Start()
     {
+        ShooterHealth = GetComponentInParent<TankHealth>();
         Destroy(gameObject, m_MaxLifeTime);
     }
 
@@ -34,7 +37,7 @@ public class ShellExplosion : MonoBehaviour
             if (targetHealth == null) continue;
 
             float damage = CalculateDamage(targetRigidbody.position);
-            targetHealth.TakeDamage(damage);
+            targetHealth.TakeDamage(damage,ShooterHealth);
         }
 
         m_ExplosionParticles.transform.parent = null;

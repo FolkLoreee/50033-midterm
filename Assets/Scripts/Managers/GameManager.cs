@@ -8,22 +8,28 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public int m_NumRoundsToWin = 5;            
-    public float m_StartDelay = 3f;             
-    public float m_EndDelay = 3f;               
-    public CameraControl m_CameraControl;       
-    public Text m_MessageText;                  
+    public int m_NumRoundsToWin = 5;
+    public float m_StartDelay = 3f;
+    public float m_EndDelay = 3f;
+    public CameraControl m_CameraControl;
+    public Text m_MessageText;
     public GameObject[] m_TankPrefabs;
-    public TankManager[] m_Tanks;               
+    public TankManager[] m_Tanks;
     public List<Transform> wayPointsForAI;
 
-    private int m_RoundNumber;                  
-    private WaitForSeconds m_StartWait;         
-    private WaitForSeconds m_EndWait;           
-    private TankManager m_RoundWinner;          
-    private TankManager m_GameWinner;           
+    private int m_RoundNumber;
+    private WaitForSeconds m_StartWait;
+    private WaitForSeconds m_EndWait;
+    private TankManager m_RoundWinner;
+    private TankManager m_GameWinner;
+    public static GameManager gmInstance;
+    public delegate void healthEvent(TankHealth source);
+    public static event healthEvent OnTankDeath;
 
-
+    private void Awake()
+    {
+        gmInstance = this;
+    }
     private void Start()
     {
         m_StartWait = new WaitForSeconds(m_StartDelay);
@@ -114,6 +120,11 @@ public class GameManager : MonoBehaviour
         m_MessageText.text = message;
 
         yield return m_EndWait;
+    }
+
+    public void RewardKiller(TankHealth source)
+    {
+        OnTankDeath(source);
     }
 
 
