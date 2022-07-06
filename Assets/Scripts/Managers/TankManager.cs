@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class TankManager
 {
-    
+
     public Color m_PlayerColor;
     public Transform m_SpawnPoint;
     [HideInInspector] public int m_PlayerNumber;
@@ -13,9 +13,12 @@ public class TankManager
     [HideInInspector] public GameObject m_Instance;
     [HideInInspector] public int m_Wins;
 
+    [HideInInspector] public int m_Kills;
+
 
     private TankMovement m_Movement;
     private TankShooting m_Shooting;
+    private TankHealth m_Health;
     private GameObject m_CanvasGameObject;
     private StateController m_StateController;
 
@@ -26,6 +29,9 @@ public class TankManager
 
         m_Shooting = m_Instance.GetComponent<TankShooting>();
         m_Shooting.m_PlayerNumber = m_PlayerNumber;
+
+        m_Health = m_Instance.GetComponent<TankHealth>();
+        m_Health.m_PlayerNumber = m_PlayerNumber;
 
         m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
         m_ColoredPlayerText = $"<color=#{ColorUtility.ToHtmlStringRGB(m_PlayerColor)}>PLAYER {m_PlayerNumber}</color>";

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class TankHealth : MonoBehaviour
 {
+    public int m_PlayerNumber = 1;
     public float m_StartingHealth = 100f;
     public Slider m_Slider;
     public Image m_FillImage;

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public Text m_MessageText;
     public GameObject[] m_TankPrefabs;
     public TankManager[] m_Tanks;
+    public StatManager m_Stats;
     public List<Transform> wayPointsForAI;
 
     private int m_RoundNumber;
@@ -23,12 +24,17 @@ public class GameManager : MonoBehaviour
     private TankManager m_RoundWinner;
     private TankManager m_GameWinner;
     public static GameManager gmInstance;
-    public delegate void healthEvent(TankHealth source);
-    public static event healthEvent OnTankDeath;
+    public delegate void killEvent(TankHealth source);
+    public static event killEvent OnTankDeath;
 
     private void Awake()
     {
         gmInstance = this;
+        for (int i = 0; i < m_Tanks.Length; i++)
+        {
+            m_Tanks[i].m_PlayerNumber = i + 1;
+        }
+        CreateStatUI();
     }
     private void Start()
     {
@@ -46,15 +52,25 @@ public class GameManager : MonoBehaviour
     {
         m_Tanks[0].m_Instance =
             Instantiate(m_TankPrefabs[0], m_Tanks[0].m_SpawnPoint.position, m_Tanks[0].m_SpawnPoint.rotation) as GameObject;
-        m_Tanks[0].m_PlayerNumber = 1;
         m_Tanks[0].SetupPlayerTank();
 
         for (int i = 1; i < m_Tanks.Length; i++)
         {
             m_Tanks[i].m_Instance =
                 Instantiate(m_TankPrefabs[i], m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
-            m_Tanks[i].m_PlayerNumber = i + 1;
             m_Tanks[i].SetupAI(wayPointsForAI);
+        }
+    }
+
+    private void CreateStatUI()
+    {
+        for (int i = 0; i < m_Tanks.Length; i++)
+        {
+            string player = "Player " + m_Tanks[i].m_PlayerNumber.ToString();
+            int kills = 0;
+            Color playerColor = m_Tanks[i].m_PlayerColor;
+            Stat stat = new Stat(player, kills, playerColor);
+            m_Stats.AddEntry(stat);
         }
     }
 
